@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="fill_parent"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:padding="10dp"
+    android:id="@+id/linearMain">
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:id="@+id/TableRow01"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/row_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:paddingRight="@dimen/activity_vertical_margin"
+            android:textSize="@dimen/fontSize_medium"/>
+
+        <TextView
+            android:id="@+id/row_volume"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/activity_vertical_margin"
+            android:textSize="@dimen/fontSize_medium"/>
+
+        <TextView
+            android:id="@+id/row_quantity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/activity_vertical_margin"
+            android:textSize="@dimen/fontSize_medium"/>
+
+        <TextView
+            android:id="@+id/row_hour"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/fontSize_medium"/>
+
+    </TableRow>
+
+</TableLayout>

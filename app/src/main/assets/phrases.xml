@@ -1,0 +1,47 @@
+<sentence>
+	<value>Frais comme un gardon !</value>
+	<startRange>0.0</startRange>
+	<endRange>0.1</endRange>
+</sentence>
+
+<sentence>
+	<value>Un petit verre c'est bon pour la santé ;)</value>
+	<startRange>0.1</startRange>
+	<endRange>0.4</endRange>
+</sentence>
+
+<sentence>
+	<value>C'est l'heure du dilemme : pose ton verre ou tes clés</value>
+	<startRange>0.4</startRange>
+	<endRange>0.7</endRange>
+</sentence>
+
+<sentence>
+	<value>Faut pas boire au volant.. Faut boire à la bouteille !!!</value>
+	<startRange>0.7</startRange>
+	<endRange>0.9</endRange>
+</sentence>
+
+<sentence>
+	<value>Un peu aviné ?</value>
+	<startRange>0.9</startRange>
+	<endRange>1.2</endRange>
+</sentence>
+
+<sentence>
+	<value>Une belle avoiné</value>
+	<startRange>1.2</startRange>
+	<endRange>1.6</endRange>
+</sentence>
+
+<sentence>
+	<value>Dieu la tôle ! Hahaha</value>
+	<startRange>1.6</startRange>
+	<endRange>2.0</endRange>
+</sentence>
+
+<sentence>
+	<value>Félicitations, le coma est proche.</value>
+	<startRange>2.0</startRange>
+	<endRange>max</endRange>
+</sentence>
