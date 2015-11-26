@@ -12,6 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -33,9 +34,8 @@ public class ListAdapterDrinks extends ArrayAdapter<Drink> {
         View v = convertView;
 
         if (v == null) {
-            LayoutInflater vi;
-            vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.drink_list_row, null);
+            LayoutInflater vi = LayoutInflater.from(parent.getContext());
+            v = vi.inflate(R.layout.drink_list_row, parent, false);
 
             Drink drink = getItem(position);
 
@@ -49,14 +49,24 @@ public class ListAdapterDrinks extends ArrayAdapter<Drink> {
                     tv_name.setText(drink.getName());
                 }
                 if (tv_quantity != null) {
-                    tv_quantity.setText(drink.getQuantity() + "");
+                    tv_quantity.setText(drink.getQuantity() + "dl");
                 }
                 if (tv_volume != null) {
-                    tv_volume.setText(drink.getVolume()+"");
+                    tv_volume.setText(drink.getVolume()+"°");
                 }
                 if (tv_hour != null) {
-                    tv_hour.setText(drink.getHourDrink().getHours() + ":" + drink.getHourDrink().getMinutes());
-                }
+                    int hour = drink.getTimeDrink().get(Calendar.HOUR_OF_DAY);
+                    int minute = drink.getTimeDrink().get(Calendar.MINUTE);
+
+                    if(minute > 0 && minute < 10)
+                    {
+                        tv_hour.setText(hour + ":0" + minute);
+                    }
+                    else
+                    {
+                        tv_hour.setText(hour + ":" + minute);
+                    }
+            }
             }
         }
 

@@ -3,124 +3,119 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:padding="15dp"
-    android:weightSum="1">
-
-    <RadioGroup
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="@dimen/activity_horizontal_margin" >
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Homme"
-            android:paddingRight="40dp"
-            android:id="@+id/rb_men"
-            android:textSize="@dimen/fontSize_medium" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Femme"
-            android:id="@+id/rb_women"
-            android:textSize="@dimen/fontSize_medium" />
-
-    </RadioGroup>
+    android:padding="15dp">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="@dimen/activity_horizontal_margin" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Poids :"
-            android:gravity="center_horizontal"
-            android:id="@+id/tv_weight"
-            android:paddingRight="10dp"
-            android:textSize="@dimen/fontSize_medium" />
-
-        <EditText
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:id="@+id/editText_weight" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kg"
-            android:gravity="center_horizontal"
-            android:id="@+id/tv_unitWeight"
-            android:paddingLeft="10dp"
-            android:textSize="@dimen/fontSize_medium" />
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Qu'avez-vous bu ?"
-        android:id="@+id/tv_question"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="@dimen/activity_horizontal_margin"
-        android:textSize="@dimen/fontSize_large"/>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="@dimen/activity_horizontal_margin" >
-
-        <ImageButton
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:scaleType="fitXY"
-            android:id="@+id/btn_addDrink"
-            android:src="@drawable/ic_add"
-            android:layout_marginEnd="15dp"
-            android:layout_alignTop="@+id/btn_calculator"
-            android:layout_alignParentEnd="true"
-            android:background="@null" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ajouter une boisson"
-            android:id="@+id/tv_addDrink"
-            android:textSize="@dimen/fontSize_medium"/>
-
-    </LinearLayout>
-
-    <ScrollView
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.5"
-        android:background="#F2F2F2">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="@dimen/activity_horizontal_margin" >
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Homme"
+                android:paddingRight="40dp"
+                android:id="@+id/rb_men"
+                android:textSize="@dimen/fontSize_medium" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Femme"
+                android:id="@+id/rb_women"
+                android:textSize="@dimen/fontSize_medium" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="@dimen/activity_horizontal_margin" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Poids :"
+                android:gravity="center_horizontal"
+                android:id="@+id/tv_weight"
+                android:paddingRight="10dp"
+                android:textSize="@dimen/fontSize_medium" />
+
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/editText_weight" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kg"
+                android:gravity="center_horizontal"
+                android:id="@+id/tv_unitWeight"
+                android:paddingLeft="10dp"
+                android:textSize="@dimen/fontSize_medium" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Qu'avez-vous bu ?"
+            android:id="@+id/tv_question"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/fontSize_large"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="@dimen/activity_horizontal_margin" >
+
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitXY"
+                android:id="@+id/btn_addDrink"
+                android:src="@drawable/ic_add"
+                android:layout_marginEnd="15dp"
+                android:layout_alignTop="@+id/btn_calculator"
+                android:layout_alignParentEnd="true"
+                android:background="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ajouter une boisson"
+                android:id="@+id/tv_addDrink"
+                android:textSize="@dimen/fontSize_medium"/>
+
+        </LinearLayout>
 
         <ListView
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:id="@+id/listView_drinks"/>
-    </ScrollView>
+
+    </LinearLayout>
 
     <Button
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Calculer"
-        android:id="@+id/btn_calculator_calculate"
-        android:layout_gravity="center_horizontal" />
-
+        android:id="@+id/btn_calculator_calculate" />
 
 </LinearLayout>

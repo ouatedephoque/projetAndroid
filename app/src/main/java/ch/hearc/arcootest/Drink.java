@@ -1,5 +1,6 @@
 package ch.hearc.arcootest;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
 public class Drink {
 
     /* Constructors */
-    public Drink(String name, float volume, float quantity, Date hourDrink)
+    public Drink(String name, float volume, float quantity, Calendar hourDrink)
     {
         this.name = name;
         this.volume = volume;
@@ -18,10 +19,8 @@ public class Drink {
 
     public Drink(String name, float volume, float quantity)
     {
-        this(name, volume, quantity, new Date(0, 0, 0, 0, 0));
+        this(name, volume, quantity, Calendar.getInstance());
     }
-
-
 
     /* Getters */
     public String getName()
@@ -36,7 +35,7 @@ public class Drink {
     {
         return quantity;
     }
-    public Date getHourDrink() {
+    public Calendar getTimeDrink() {
         return hourDrink;
     }
 
@@ -53,7 +52,7 @@ public class Drink {
     {
         this.quantity = quantity;
     }
-    public void setHourDrink(Date hourDrink) {
+    public void setTimeDrink(Calendar hourDrink) {
         this.hourDrink = hourDrink;
     }
 
@@ -61,5 +60,5 @@ public class Drink {
     private String name;
     private float volume;
     private float quantity;
-    private Date hourDrink;
+    private Calendar hourDrink;
 }

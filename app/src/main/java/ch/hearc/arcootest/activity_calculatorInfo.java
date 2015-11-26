@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -78,6 +79,8 @@ public class activity_calculatorInfo extends Activity {
         volOfAlcool = (EditText) dialog.findViewById(R.id.editText_volume);
         volIngurgited = (EditText) dialog.findViewById(R.id.editText_volumeIngurgited);
         hourDrink = (TimePicker) dialog.findViewById(R.id.timePicker_hourDrink);
+        hourDrink.setIs24HourView(true);
+        hourDrink.setCurrentHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
 
         typeOfDrink.setAdapter(createAdapter()); // Create and set the adapter
 
@@ -101,9 +104,11 @@ public class activity_calculatorInfo extends Activity {
                 String name = typeOfDrink.getSelectedItem().toString();
                 float volume = Float.parseFloat(volOfAlcool.getText().toString());
                 float quantity = Float.parseFloat(volIngurgited.getText().toString());
-                Date date = new Date(0, 0, 0, hourDrink.getCurrentHour(), hourDrink.getCurrentMinute()); // Date(int year, int month, int day, int hour, int minute)
+                Calendar calendar = Calendar.getInstance();
 
-                addItem(new Drink(name, volume, quantity, date));
+                calendar.set(0, 0, 0, hourDrink.getCurrentHour(), hourDrink.getCurrentMinute()); // set(int year, int month, int day, int hour, int minute)
+
+                addItem(new Drink(name, volume, quantity, calendar));
 
                 dialog.dismiss(); // Close dialog
             }
