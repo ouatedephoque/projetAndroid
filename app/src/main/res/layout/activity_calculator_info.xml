@@ -16,7 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:paddingBottom="@dimen/activity_horizontal_margin" >
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:id="@+id/rg_sex">
 
             <RadioButton
                 android:layout_width="wrap_content"

@@ -2,6 +2,7 @@ package ch.hearc.arcootest;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -35,11 +38,19 @@ import java.util.List;
  * Created by jeshon.assuncao on 05.11.2015.
  */
 public class activity_calculatorInfo extends Activity {
+    public final String EXTRA_DRINKS = "DRINKS";
+    public final String EXTRA_SEX = "SEX";
+    public final String EXTRA_WEIGHT = "WEIGHT";
+
+    private RadioGroup sexGroup;
+    private RadioButton sexButton;
+    private EditText weight;
     private ImageButton addDrink;
     private ListView listViewOfDrinked;
     private List<Drink> listOfDrinks; // List of all drinks
-    private List<Drink> listOfDrinked; // List of all drinks drinked
+    private ArrayList<Drink> listOfDrinked; // List of all drinks drinked
     private ListAdapterDrinks adapterDrinked; // Adapter for listView of cup drinked
+    private Button calculate;
 
     /* variable use in dialog*/
     private Spinner typeOfDrink;
@@ -52,6 +63,14 @@ public class activity_calculatorInfo extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator_info);
 
+        sexGroup = (RadioGroup)findViewById(R.id.rg_sex);
+        sexGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                sexButton = (RadioButton) findViewById(checkedId);
+            }
+        });
+        weight = (EditText)findViewById(R.id.editText_weight);
         addDrink = (ImageButton)findViewById(R.id.btn_addDrink);
         addDrink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +85,18 @@ public class activity_calculatorInfo extends Activity {
         listViewOfDrinked.setAdapter(adapterDrinked);
 
         listOfDrinks = readXML();
+
+        calculate = (Button)findViewById(R.id.btn_calculator_calculate);
+        calculate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity_calculatorInfo.this, activity_calculatorResult.class);
+                intent.putParcelableArrayListExtra(EXTRA_DRINKS, listOfDrinked);
+                intent.putExtra(EXTRA_SEX, sexButton.getText().toString());
+                intent.putExtra(EXTRA_WEIGHT, Float.parseFloat(weight.getText().toString()));
+                startActivity(intent);
+            }
+        });
     }
 
     private void createDialogDrinks()
@@ -105,7 +136,8 @@ public class activity_calculatorInfo extends Activity {
                 float volume = Float.parseFloat(volOfAlcool.getText().toString());
                 float quantity = Float.parseFloat(volIngurgited.getText().toString());
                 Calendar calendar = Calendar.getInstance();
-
+                calendar.setCurrentHour(hourDrink.getCurrentHour());
+                calendar.set
                 calendar.set(0, 0, 0, hourDrink.getCurrentHour(), hourDrink.getCurrentMinute()); // set(int year, int month, int day, int hour, int minute)
 
                 addItem(new Drink(name, volume, quantity, calendar));
