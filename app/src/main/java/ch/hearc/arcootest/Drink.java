@@ -31,6 +31,11 @@ public class Drink implements Parcelable {
         this(name, volume, quantity, Calendar.getInstance());
     }
 
+    public Drink()
+    {
+        this("", 0, 0, Calendar.getInstance());
+    }
+
     /* Getters */
     public String getName()
     {

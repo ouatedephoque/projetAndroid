@@ -1,7 +1,10 @@
 package ch.hearc.arcootest;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,14 +28,22 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
 
 /**
  * Created by jeshon.assuncao on 05.11.2015.
@@ -79,17 +90,54 @@ public class activity_calculatorInfo extends Activity {
             }
         });
         listViewOfDrinked = (ListView)findViewById(R.id.listView_drinks);
-        listOfDrinked = new ArrayList<Drink>();
+        listOfDrinked = ReadDrinks(this);
 
         adapterDrinked = new ListAdapterDrinks(this, R.layout.drink_list_row, listOfDrinked);
         listViewOfDrinked.setAdapter(adapterDrinked);
 
+        /* Method called when we click on a drink into the ListView */
+        listViewOfDrinked.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(final AdapterView<?> adapter, View view, int position, long id) {
+                final Drink drink = (Drink)adapter.getItemAtPosition(position);
+
+                /* Create a dialog box for delete the drink of the ListView */
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity_calculatorInfo.this);
+
+                builder.setMessage("Voulez-vous supprimer la boisson : " + drink.getName() + " ?");
+
+                /* When we click on "yes" for deleting the drink */
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteItem(drink);
+                    }
+                });
+
+                /* When we click on "No" for deleting the drink */
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            }
+        });
+
+        /* Get all the drinks writed into the XML file */
         listOfDrinks = readXML();
 
         calculate = (Button)findViewById(R.id.btn_calculator_calculate);
+
+        /* Method called when we click on "Calculate" button */
         calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /* Write the list of drinked into a txt file */
+                WriteDrinks(activity_calculatorInfo.this, listOfDrinked);
+
+                /* Call a new activity for show the result */
                 Intent intent = new Intent(activity_calculatorInfo.this, activity_calculatorResult.class);
                 intent.putParcelableArrayListExtra(EXTRA_DRINKS, listOfDrinked);
                 intent.putExtra(EXTRA_SEX, sexButton.getText().toString());
@@ -136,9 +184,10 @@ public class activity_calculatorInfo extends Activity {
                 float volume = Float.parseFloat(volOfAlcool.getText().toString());
                 float quantity = Float.parseFloat(volIngurgited.getText().toString());
                 Calendar calendar = Calendar.getInstance();
-                calendar.setCurrentHour(hourDrink.getCurrentHour());
-                calendar.set
-                calendar.set(0, 0, 0, hourDrink.getCurrentHour(), hourDrink.getCurrentMinute()); // set(int year, int month, int day, int hour, int minute)
+                Date date = new Date();
+                date.setHours(hourDrink.getCurrentHour());
+                date.setMinutes(hourDrink.getCurrentMinute());
+                calendar.setTime(date);
 
                 addItem(new Drink(name, volume, quantity, calendar));
 
@@ -155,9 +204,13 @@ public class activity_calculatorInfo extends Activity {
         });
     }
 
-    //METHOD WHICH WILL HANDLE DYNAMIC INSERTION
     public void addItem(Drink drink) {
         listOfDrinked.add(drink);
+        adapterDrinked.notifyDataSetChanged();
+    }
+
+    public void deleteItem(Drink drink) {
+        listOfDrinked.remove(drink);
         adapterDrinked.notifyDataSetChanged();
     }
 
@@ -254,5 +307,94 @@ public class activity_calculatorInfo extends Activity {
             return listOfDrinks;
         }
         return null;
+    }
+
+    public void WriteDrinks(Context context, List<Drink> list)
+    {
+        String data = "";
+
+        for (Drink drink:list)
+        {
+            data += drink.getName() + ";";
+            data += drink.getVolume() + ";";
+            data += drink.getQuantity() + ";";
+            data += drink.getTimeDrink().getTime().toString();
+            data += "\n";
+        }
+
+        FileOutputStream fout = null;
+        OutputStreamWriter osw = null;
+
+        try{
+            fout = context.openFileOutput("drinksBackup.txt", MODE_PRIVATE);
+            osw = new OutputStreamWriter(fout);
+            osw.write(data);
+            osw.flush();
+
+            Log.i("information", "Drinks saved ");
+        }
+        catch (Exception e) {
+            Log.e("error", "Drinks not saved ");
+        }
+        finally {
+            try {
+                osw.close();
+                fout.close();
+            } catch (IOException e) {
+                Log.e("error", "Buffer not closed");
+            }
+        }
+    }
+
+    public ArrayList<Drink> ReadDrinks(Context context){
+        ArrayList<Drink> listToReturn = new ArrayList<Drink>();
+
+        InputStream fin = null;
+        InputStreamReader isr = null;
+        Scanner br = null;
+
+        String data = "";
+
+        try{
+            fin = context.openFileInput("drinksBackup.txt");
+
+            // prepare the file for reading
+            isr = new InputStreamReader(fin);
+            br = new Scanner(isr);
+
+            while(br.hasNext()){
+                data = br.nextLine();
+
+                String[] drinkArray = data.split(";");
+
+                if(drinkArray.length == 4)
+                {
+                    Calendar calendar = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+                    calendar.setTime(sdf.parse(drinkArray[3])); // all done
+
+                    Drink drink = new Drink(drinkArray[0], Float.parseFloat(drinkArray[1]), Float.parseFloat(drinkArray[2]), calendar);
+                    listToReturn.add(drink);
+                }
+            };
+
+            Log.i("information", "Drinks readed");
+        }
+        catch (Exception e) {
+            Log.e("error", "Drinks not readed");
+            return new ArrayList<Drink>();
+        }
+        finally {
+            try {
+                isr.close();
+                fin.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("error", "Unable to close buffers");
+            }
+        }
+
+
+        return listToReturn;
     }
 }
