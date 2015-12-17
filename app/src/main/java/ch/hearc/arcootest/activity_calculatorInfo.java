@@ -99,7 +99,8 @@ public class activity_calculatorInfo extends Activity {
         listViewOfDrinked.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapter, View view, int position, long id) {
-                final Drink drink = (Drink)adapter.getItemAtPosition(position);
+                final int pos = position;
+                final Drink drink = (Drink)adapter.getItemAtPosition(pos);
 
                 /* Create a dialog box for delete the drink of the ListView */
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity_calculatorInfo.this);
@@ -110,7 +111,7 @@ public class activity_calculatorInfo extends Activity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        deleteItem(drink);
+                        deleteItem(pos);
                     }
                 });
 
@@ -133,16 +134,24 @@ public class activity_calculatorInfo extends Activity {
         /* Method called when we click on "Calculate" button */
         calculate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                /* Write the list of drinked into a txt file */
-                WriteDrinks(activity_calculatorInfo.this, listOfDrinked);
+            public void onClick(View v)
+            {
+                if(sexButton == null || weight.getText().toString().isEmpty())
+                {
+                    Toast.makeText(activity_calculatorInfo.this, "Veuillez entrez toutes les informatios nécessaires", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    /* Write the list of drinked into a txt file */
+                    WriteDrinks(activity_calculatorInfo.this, listOfDrinked);
 
-                /* Call a new activity for show the result */
-                Intent intent = new Intent(activity_calculatorInfo.this, activity_calculatorResult.class);
-                intent.putParcelableArrayListExtra(EXTRA_DRINKS, listOfDrinked);
-                intent.putExtra(EXTRA_SEX, sexButton.getText().toString());
-                intent.putExtra(EXTRA_WEIGHT, Float.parseFloat(weight.getText().toString()));
-                startActivity(intent);
+                    /* Call a new activity for show the result */
+                    Intent intent = new Intent(activity_calculatorInfo.this, activity_calculatorResult.class);
+                    intent.putParcelableArrayListExtra(EXTRA_DRINKS, listOfDrinked);
+                    intent.putExtra(EXTRA_SEX, sexButton.getText().toString());
+                    intent.putExtra(EXTRA_WEIGHT, Float.parseFloat(weight.getText().toString()));
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -209,9 +218,9 @@ public class activity_calculatorInfo extends Activity {
         adapterDrinked.notifyDataSetChanged();
     }
 
-    public void deleteItem(Drink drink) {
-        listOfDrinked.remove(drink);
-        adapterDrinked.notifyDataSetChanged();
+    public void deleteItem(int position) {
+        adapterDrinked.remove(listOfDrinked.get(position));
+        listViewOfDrinked.setAdapter(adapterDrinked);
     }
 
     private ArrayAdapter createAdapter()
@@ -350,17 +359,15 @@ public class activity_calculatorInfo extends Activity {
         ArrayList<Drink> listToReturn = new ArrayList<Drink>();
 
         InputStream fin = null;
-        InputStreamReader isr = null;
-        Scanner br = null;
-
-        String data = "";
 
         try{
             fin = context.openFileInput("drinksBackup.txt");
 
+            String data = "";
+
             // prepare the file for reading
-            isr = new InputStreamReader(fin);
-            br = new Scanner(isr);
+            InputStreamReader isr = new InputStreamReader(fin);
+            Scanner br = new Scanner(isr);
 
             while(br.hasNext()){
                 data = br.nextLine();
@@ -379,19 +386,13 @@ public class activity_calculatorInfo extends Activity {
             };
 
             Log.i("information", "Drinks readed");
+
+            isr.close();
+            fin.close();
         }
         catch (Exception e) {
             Log.e("error", "Drinks not readed");
             return new ArrayList<Drink>();
-        }
-        finally {
-            try {
-                isr.close();
-                fin.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e("error", "Unable to close buffers");
-            }
         }
 
 
