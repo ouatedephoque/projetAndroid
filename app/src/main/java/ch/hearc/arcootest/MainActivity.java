@@ -31,6 +31,14 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        alcootest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, activity_ethylotest.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -3,6 +3,7 @@ package ch.hearc.arcootest;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -56,9 +57,28 @@ public class activity_calculatorResult extends Activity {
 
         alcoholCount = (TextView)findViewById(R.id.tv_alcoholCount);
         moral = (TextView)findViewById(R.id.tv_moral);
+
         goBackToNight = (Button)findViewById(R.id.btn_calculator_goBackToNight);
+        goBackToNight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         goBackToMain= (Button)findViewById(R.id.btn_calculator_accueil);
+        goBackToMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         newNight= (Button)findViewById(R.id.btn_calculator_newNight);
+        newNight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

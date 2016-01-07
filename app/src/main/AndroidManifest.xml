@@ -24,6 +24,10 @@
         <activity
             android:name=".activity_calculatorResult"
             android:label="@string/title_activity_calculatorResult" />
+        <activity
+            android:name=".activity_ethylotest"
+            android:label="@string/title_activity_ethylotest"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
