@@ -28,6 +28,10 @@
             android:name=".activity_ethylotest"
             android:label="@string/title_activity_ethylotest"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity_ethylotestResult"
+            android:label="@string/title_activity_ethylotestResult"/>
+
     </application>
 
 </manifest>

@@ -5,5 +5,16 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_calculatorInfo">Calculator Info</string>
     <string name="title_activity_calculatorResult">Calculator Result</string>
-    <string name="title_activity_ethylotest">Calculator Ethylotest</string>
+    <string name="title_activity_ethylotest">Ethylotest</string>
+    <string name="title_activity_ethylotestResult">Ethylotest Result</string>
+
+    <string name="moral_0">Frais comme un gardon !</string>
+    <string name="moral_1">Un petit verre c\'est bon pour la santé ;)</string>
+    <string name="moral_2">C\'est l\'heure du dilemme : pose ton verre ou tes clés</string>
+    <string name="moral_3">Faut pas boire au volant.. Faut boire à la bouteille !!!</string>
+    <string name="moral_4">Un peu aviné ?</string>
+    <string name="moral_5">Une belle avoiné</string>
+    <string name="moral_6">Dieu la tôle ! Hahaha</string>
+    <string name="moral_7">Félicitations, le coma est proche.</string>
+
 </resources>

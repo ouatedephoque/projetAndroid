@@ -52,6 +52,8 @@ public class activity_calculatorInfo extends Activity {
     public final String EXTRA_DRINKS = "DRINKS";
     public final String EXTRA_SEX = "SEX";
     public final String EXTRA_WEIGHT = "WEIGHT";
+    private static final int REQUEST_CODE = 12;
+    private static final String EXTRA_RESULT = "TO_DO_CODE";
 
     private RadioGroup sexGroup;
     private RadioButton sexButton;
@@ -75,6 +77,7 @@ public class activity_calculatorInfo extends Activity {
         setContentView(R.layout.activity_calculator_info);
 
         sexGroup = (RadioGroup)findViewById(R.id.rg_sex);
+        sexGroup.check(0);
         sexGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -82,6 +85,7 @@ public class activity_calculatorInfo extends Activity {
             }
         });
         weight = (EditText)findViewById(R.id.editText_weight);
+        weight.setText("0");
         addDrink = (ImageButton)findViewById(R.id.btn_addDrink);
         addDrink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +105,8 @@ public class activity_calculatorInfo extends Activity {
             public void onItemClick(final AdapterView<?> adapter, View view, int position, long id) {
                 final int pos = position;
                 final Drink drink = (Drink)adapter.getItemAtPosition(pos);
+
+                Log.d("pos : ", pos+"");
 
                 /* Create a dialog box for delete the drink of the ListView */
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity_calculatorInfo.this);
@@ -150,7 +156,7 @@ public class activity_calculatorInfo extends Activity {
                     intent.putParcelableArrayListExtra(EXTRA_DRINKS, listOfDrinked);
                     intent.putExtra(EXTRA_SEX, sexButton.getText().toString());
                     intent.putExtra(EXTRA_WEIGHT, Float.parseFloat(weight.getText().toString()));
-                    startActivity(intent);
+                    startActivityForResult(intent, REQUEST_CODE);
                 }
             }
         });
@@ -221,6 +227,7 @@ public class activity_calculatorInfo extends Activity {
     public void deleteItem(int position) {
         adapterDrinked.remove(listOfDrinked.get(position));
         listViewOfDrinked.setAdapter(adapterDrinked);
+        WriteDrinks(this, listOfDrinked);
     }
 
     private ArrayAdapter createAdapter()
@@ -397,5 +404,37 @@ public class activity_calculatorInfo extends Activity {
 
 
         return listToReturn;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        switch (requestCode)
+        {
+            case REQUEST_CODE:
+                if(resultCode == RESULT_OK)
+                {
+                    Bundle res = data.getExtras();
+                    int result = res.getInt(EXTRA_RESULT);
+
+                    if(result == 0)
+                    {
+                        finish();
+                    }
+                    else if(result == 2)
+                    {
+                        int count = listViewOfDrinked.getCount();
+                        for(int i=0; i < count; i++)
+                        {
+                            deleteItem(0);
+                        }
+                    }
+                    else
+                    {
+                        // Nothing to do
+                    }
+                }
+                break;
+        }
     }
 }

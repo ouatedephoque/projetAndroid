@@ -1,6 +1,7 @@
 package ch.hearc.arcootest;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,8 @@ public class activity_calculatorResult extends Activity {
     public final String EXTRA_DRINKS = "DRINKS";
     public final String EXTRA_SEX = "SEX";
     public final String EXTRA_WEIGHT = "WEIGHT";
+    private static final int REQUEST_CODE = 12;
+    private static final String EXTRA_RESULT = "TO_DO_CODE";
     public final double COEF_MEN = 0.7;
     public final double COEF_GIRL = 0.6;
     public final double COEF_MUL = 0.8;
@@ -62,21 +65,23 @@ public class activity_calculatorResult extends Activity {
         goBackToNight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishWithResult(1);
             }
         });
+
         goBackToMain= (Button)findViewById(R.id.btn_calculator_accueil);
         goBackToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                finishWithResult(0);
             }
         });
+
         newNight= (Button)findViewById(R.id.btn_calculator_newNight);
         newNight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                finishWithResult(2);
             }
         });
 
@@ -117,6 +122,7 @@ public class activity_calculatorResult extends Activity {
 
         NumberFormat nf = new DecimalFormat("#.###");
         alcoholCount.setText(nf.format(tauxTot) + " g/l");
+        showMoral(tauxTot);
     }
 
     public double susbtractAlcoholAbsorbed(double tauxTot)
@@ -140,5 +146,51 @@ public class activity_calculatorResult extends Activity {
         }*/
 
         return 0.0;
+    }
+
+    private void showMoral(double tauxTot)
+    {
+        if(tauxTot >= 0 && tauxTot <= 0.1)
+        {
+            moral.setText(getString(R.string.moral_0));
+        }
+        else if(tauxTot > 0.1 && tauxTot <= 0.4)
+        {
+            moral.setText(getString(R.string.moral_1));
+        }
+        else if(tauxTot > 0.4 && tauxTot <= 0.7)
+        {
+            moral.setText(getString(R.string.moral_2));
+        }
+        else if(tauxTot > 0.7 && tauxTot <= 0.9)
+        {
+            moral.setText(getString(R.string.moral_3));
+        }
+        else if(tauxTot > 0.9 && tauxTot <= 1.2)
+        {
+            moral.setText(getString(R.string.moral_4));
+        }
+        else if(tauxTot > 1.2 && tauxTot <= 1.6)
+        {
+            moral.setText(getString(R.string.moral_5));
+        }
+        else if(tauxTot > 1.6 && tauxTot <= 2.0)
+        {
+            moral.setText(getString(R.string.moral_6));
+        }
+        else
+        {
+            moral.setText(getString(R.string.moral_7));
+        }
+    }
+
+    private void finishWithResult(int codeResult)
+    {
+        Bundle conData = new Bundle();
+        conData.putInt(EXTRA_RESULT, codeResult);
+        Intent intent = new Intent();
+        intent.putExtras(conData);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

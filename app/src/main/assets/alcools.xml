@@ -1,10 +1,10 @@
 <drinks>
-	<drink> 
+	<drink>
 		<name>Bière</name>
 		<vol>5</vol>
 		<qte>3</qte>
 	</drink>
-	<drink> 
+	<drink>
 		<name>Vin</name>
 		<vol>11</vol>
 		<qte>1</qte>
